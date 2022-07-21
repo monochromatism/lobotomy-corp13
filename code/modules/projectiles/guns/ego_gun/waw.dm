@@ -1,4 +1,4 @@
-/obj/item/gun/hornet
+/obj/item/gun/ego_gun/hornet
 	name = "hornet"
 	desc = "The kingdom needed to stay prosperous, and more bees were required for that task.\
 	The projectiles relive the legacy of the kingdom as they travel toward the target."
