@@ -1,10 +1,10 @@
 
 /obj/machinery/vending/cola
-	name = "\improper Robust Softdrinks"
-	desc = "A softdrink vendor provided by Robust Industries, LLC."
+	name = "\improper Well-Cheers Soft Drinks"
+	desc = "A soft drink vendor provided by some P-Corp affiliate."
 	icon_state = "Cola_Machine"
-	product_slogans = "Robust Softdrinks: More robust than a toolbox to the head!"
-	product_ads = "Refreshing!;Hope you're thirsty!;Over 1 million drinks sold!;Thirsty? Why not cola?;Please, have a drink!;Drink up!;The best drinks in space."
+	product_slogans = "Well-Cheers: Soda of the Sea!"
+	product_ads = "Refreshing!;A taste of the coast!;Over 1 million drinks sold!;Thirsty? Why not soda?;Please, have a drink!;Drink up!;The best drinks in the City."
 	products = list(/obj/item/reagent_containers/food/drinks/soda_cans/cola = 10,
 		            /obj/item/reagent_containers/food/drinks/soda_cans/space_mountain_wind = 10,
 					/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb = 10,
@@ -25,9 +25,9 @@
 	extra_price = PAYCHECK_MEDIUM
 	payment_department = ACCOUNT_SRV
 
-
+/*
 /obj/item/vending_refill/cola
-	machine_name = "Robust Softdrinks"
+	machine_name = "Well-Cheers Soft Drinks"
 	icon_state = "refill_cola"
 
 /obj/machinery/vending/cola/blue
@@ -75,6 +75,7 @@
 	product_slogans = "The POWER that gamers crave! PWR GAME!"
 	light_mask = "pwr_game-light-mask"
 	light_color = COLOR_STRONG_VIOLET
+*/
 
 /obj/machinery/vending/cola/shamblers
 	name = "\improper Shambler's Vendor"
@@ -93,3 +94,4 @@
 	product_ads = "Refreshing!;Jyrbv dv lg jfdv fw kyrk Jyrdscvi'j Alztv!;Over 1 trillion souls drank!;Thirsty? Nyp efk uizeb kyv uribevjj?;Kyv Jyrdscvi uizebj kyv ezxyk!;Drink up!;Krjkp."
 	light_mask = "shamblers-light-mask"
 	light_color = COLOR_MOSTLY_PURE_PINK
+

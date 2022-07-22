@@ -385,8 +385,8 @@
 	color = "#100800" // rgb: 16, 8, 0
 	taste_description = "cola"
 	glass_icon_state  = "glass_brown"
-	glass_name = "glass of Space Cola"
-	glass_desc = "A glass of refreshing Space Cola."
+	glass_name = "glass of cola"
+	glass_desc = "A glass of refreshing cola."
 
 /datum/reagent/consumable/space_cola/on_mob_life(mob/living/carbon/M)
 	M.drowsyness = max(0,M.drowsyness-5)
@@ -567,12 +567,12 @@
 
 /datum/reagent/consumable/tonic
 	name = "Tonic Water"
-	description = "It tastes strange but at least the quinine keeps the Space Malaria at bay."
+	description = "It tastes strange but at least the quinine keeps the exotic disease at bay."
 	color = "#0064C8" // rgb: 0, 100, 200
 	taste_description = "tart and fresh"
 	glass_icon_state = "glass_clear"
 	glass_name = "glass of tonic water"
-	glass_desc = "Quinine tastes funny, but at least it'll keep that Space Malaria away."
+	glass_desc = "Quinine tastes funny, but at least it'll keep that exotic disease away."
 
 /datum/reagent/consumable/tonic/on_mob_life(mob/living/carbon/M)
 	M.dizziness = max(0,M.dizziness-5)
@@ -583,14 +583,14 @@
 	. = 1
 
 /datum/reagent/consumable/monkey_energy
-	name = "Monkey Energy"
-	description = "The only drink that will make you unleash the ape."
+	name = "Suck My Energy"
+	description = "The offensively named energy drink."
 	color = "#f39b03" // rgb: 243, 155, 3
 	overdose_threshold = 60
 	taste_description = "barbecue and nostalgia"
 	glass_icon_state = "monkey_energy_glass"
-	glass_name = "glass of Monkey Energy"
-	glass_desc = "You can unleash the ape, but without the pop of the can?"
+	glass_name = "glass of Suck My Energy"
+	glass_desc = "Is it really sucking if it's just in a glass?"
 
 /datum/reagent/consumable/monkey_energy/on_mob_life(mob/living/carbon/M)
 	M.Jitter(20)
@@ -678,7 +678,7 @@
 	taste_description = "homely fruit"
 	glass_icon_state = "doctorsdelightglass"
 	glass_name = "Doctor's Delight"
-	glass_desc = "The space doctor's favorite. Guaranteed to restore bodily injury; side effects include cravings and hunger."
+	glass_desc = "The safety team's favorite. Guaranteed to restore bodily injury; side effects include cravings and hunger."
 
 /datum/reagent/consumable/doctor_delight/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-0.5, 0)
@@ -845,13 +845,13 @@
 
 /datum/reagent/consumable/cream_soda
 	name = "Cream Soda"
-	description = "A classic space-American vanilla flavored soft drink."
+	description = "A classic vanilla flavored soft drink."
 	color = "#dcb137"
 	quality = DRINK_VERYGOOD
 	taste_description = "fizzy vanilla"
 	glass_icon_state = "cream_soda"
 	glass_name = "Cream Soda"
-	glass_desc = "A classic space-American vanilla flavored soft drink."
+	glass_desc = "A classic vanilla flavored soft drink."
 
 /datum/reagent/consumable/cream_soda/on_mob_life(mob/living/carbon/M)
 	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, M.get_body_temp_normal())

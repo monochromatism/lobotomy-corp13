@@ -251,7 +251,7 @@
 
 /obj/item/reagent_containers/food/drinks/mug/tea
 	name = "Duke Purple tea"
-	desc = "An insult to Duke Purple is an insult to the Space Queen! Any proper gentleman will fight you, if you sully this tea."
+	desc = "An insult to Duke Purple is an insult to the Queen! Any proper gentleman will fight you, if you sully this tea."
 	list_reagents = list(/datum/reagent/consumable/tea = 30)
 
 /obj/item/reagent_containers/food/drinks/mug/coco
@@ -274,7 +274,7 @@
 
 /obj/item/reagent_containers/food/drinks/waterbottle
 	name = "bottle of water"
-	desc = "A bottle of water filled at an old Earth bottling facility."
+	desc = "A bottle of water filled at a random seaside bottling facility."
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "smallbottle"
 	inhand_icon_state = "bottle"
@@ -419,7 +419,7 @@
 
 /obj/item/reagent_containers/food/drinks/beer
 	name = "space beer"
-	desc = "Beer. In space."
+	desc = "Crack one open."
 	icon_state = "beer"
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 30)
 	foodtype = GRAIN | ALCOHOL
@@ -427,7 +427,7 @@
 
 /obj/item/reagent_containers/food/drinks/beer/light
 	name = "Carp Lite"
-	desc = "Brewed with \"Pure Ice Asteroid Spring Water\"."
+	desc = "Brewed with \"Pure Glacier Spring Water\"."
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer/light = 30)
 
 /obj/item/reagent_containers/food/drinks/ale
@@ -675,15 +675,15 @@
 	return ..()
 
 /obj/item/reagent_containers/food/drinks/soda_cans/cola
-	name = "Space Cola"
-	desc = "Cola. in space."
+	name = "Cola"
+	desc = "Cola. The most basic type of soft drink."
 	icon_state = "cola"
 	list_reagents = list(/datum/reagent/consumable/space_cola = 30)
 	foodtype = SUGAR
 
 /obj/item/reagent_containers/food/drinks/soda_cans/tonic
-	name = "T-Borg's tonic water"
-	desc = "Quinine tastes funny, but at least it'll keep that Space Malaria away."
+	name = "Tonic water"
+	desc = "Quinine tastes funny, but at least it'll keep that exotic disease away."
 	icon_state = "tonic"
 	list_reagents = list(/datum/reagent/consumable/tonic = 50)
 	foodtype = ALCOHOL
@@ -713,29 +713,29 @@
 	foodtype = SUGAR
 
 /obj/item/reagent_containers/food/drinks/soda_cans/space_up
-	name = "Space-Up!"
-	desc = "Tastes like a hull breach in your mouth."
+	name = "Drink-Up!"
+	desc = "Tastes like a Night in the Backstreets in your mouth."
 	icon_state = "space-up"
 	list_reagents = list(/datum/reagent/consumable/space_up = 30)
 	foodtype = SUGAR | JUNKFOOD
 
 /obj/item/reagent_containers/food/drinks/soda_cans/starkist
 	name = "Star-kist"
-	desc = "The taste of a star in liquid form. And, a bit of tuna...?"
+	desc = "The taste of a star in liquid form. And... a bit of tuna...?"
 	icon_state = "starkist"
 	list_reagents = list(/datum/reagent/consumable/space_cola = 15, /datum/reagent/consumable/orangejuice = 15)
 	foodtype = SUGAR | FRUIT | JUNKFOOD
 
 /obj/item/reagent_containers/food/drinks/soda_cans/space_mountain_wind
-	name = "Space Mountain Wind"
-	desc = "Blows right through you like a space wind."
+	name = "Mountain Wind"
+	desc = "Blows right through you like a breeze."
 	icon_state = "space_mountain_wind"
 	list_reagents = list(/datum/reagent/consumable/spacemountainwind = 30)
 	foodtype = SUGAR | JUNKFOOD
 
 /obj/item/reagent_containers/food/drinks/soda_cans/thirteenloko
 	name = "Thirteen Loko"
-	desc = "The CMO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkenness, or even death. Please Drink Responsibly."
+	desc = "The Safety Team Captain has advised employees that consumption of Thirteen Loko may result in seizures, blindness, drunkenness, or even death. Please Drink Responsibly."
 	icon_state = "thirteen_loko"
 	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko = 30)
 	foodtype = SUGAR | JUNKFOOD
@@ -754,8 +754,8 @@
 	list_reagents = list(/datum/reagent/consumable/pwr_game = 30)
 
 /obj/item/reagent_containers/food/drinks/soda_cans/shamblers
-	name = "Shambler's juice"
-	desc = "~Shake me up some of that Shambler's Juice!~"
+	name = "Sweeper juice"
+	desc = "~Shake me up some of that Sweeper Juice!~"
 	icon_state = "shamblers"
 	list_reagents = list(/datum/reagent/consumable/shamblers = 30)
 	foodtype = SUGAR | JUNKFOOD
@@ -768,8 +768,8 @@
 	foodtype = SUGAR | JUNKFOOD
 
 /obj/item/reagent_containers/food/drinks/soda_cans/monkey_energy
-	name = "Monkey Energy"
-	desc = "Unleash the ape!"
+	name = "Suck My Energy"
+	desc = "You can read, can't you?"
 	icon_state = "monkey_energy"
 	inhand_icon_state = "monkey_energy"
 	list_reagents = list(/datum/reagent/consumable/monkey_energy = 50)
@@ -780,3 +780,21 @@
 	desc = "There is no air shortage. Do not drink."
 	icon_state = "air"
 	list_reagents = list(/datum/reagent/nitrogen = 24, /datum/reagent/oxygen = 6)
+
+/obj/item/reagent_containers/food/drinks/soda_cans/mundane_red_wellcheers
+	name = "cherry soda"
+	desc = "Feels vivacious."
+	icon_state = "wellcheers_red"
+	list_reagents = list(/datum/reagent/consumable/wellcheers_red = 1, /datum/reagent/consumable/space_up = 29)
+
+/obj/item/reagent_containers/food/drinks/soda_cans/mundane_blue_wellcheers
+	name = "blue soda"
+	desc = "Is blue a flavor?"
+	icon_state = "wellcheers_blue"
+	list_reagents = list(/datum/reagent/consumable/wellcheers_blue = 1, /datum/reagent/consumable/sodawater = 29)
+
+/obj/item/reagent_containers/food/drinks/soda_cans/mundane_purple_wellcheers
+	name = "grape soda"
+	desc = "It has a bad energy to it..."
+	icon_state = "wellcheers_purple"
+	list_reagents = list(/datum/reagent/consumable/wellcheers_purple = 1, /datum/reagent/consumable/grape_soda = 29)

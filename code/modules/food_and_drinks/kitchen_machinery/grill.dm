@@ -46,7 +46,7 @@
 	if(istype(I, /obj/item/reagent_containers/food/drinks))
 		if(I.reagents.has_reagent(/datum/reagent/consumable/monkey_energy))
 			grill_fuel += (20 * (I.reagents.get_reagent_amount(/datum/reagent/consumable/monkey_energy)))
-			to_chat(user, "<span class='notice'>You pour the Monkey Energy in [src].</span>")
+			to_chat(user, "<span class='notice'>You pour the Suck My Energy in [src].</span>")
 			I.reagents.remove_reagent(/datum/reagent/consumable/monkey_energy, I.reagents.get_reagent_amount(/datum/reagent/consumable/monkey_energy))
 			update_icon()
 			return
