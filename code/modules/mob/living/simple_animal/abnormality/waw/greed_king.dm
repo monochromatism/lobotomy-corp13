@@ -38,9 +38,6 @@
 	var/list/been_hit = list()
 	var/busy = FALSE
 
-
-	can_spawn = FALSE // For testing only
-
 	ego_list = list(
 		/datum/ego_datum/weapon/goldrush,
 		/datum/ego_datum/armor/goldrush
