@@ -63,3 +63,10 @@
 /obj/living/simple_animal/hostile/abnormality/burrowing_heaven/examine(mob/user)
 	observe_time = world.time + observe_delay
 	return ..()
+
+/mob/living/simple_animal/hostile/abnormality/silentorchestra/breach_effect(mob/living/carbon/human/user)
+	..()
+	var/turf/T = pick(GLOB.department_centers)
+	forceMove(T)
+	DamagePulse()
+	return
