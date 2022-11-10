@@ -131,10 +131,10 @@
 		teleport()
 		return
 	forceMove(T)
+	charging = TRUE
 
 	//Hiteffect stuff
 	for(var/mob/living/L in orange(1, T))
-		charging = TRUE
 		if(L in been_hit || L == src)
 			continue
 		been_hit+=L
