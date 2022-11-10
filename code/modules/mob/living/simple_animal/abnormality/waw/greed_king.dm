@@ -1,4 +1,4 @@
-//This abnormality does like one thing. I hope no one gets to play as it.
+//This abnormality does more things now! It should be enjoyable enough to play as.
 /mob/living/simple_animal/hostile/abnormality/greed_king
 	name = "King of Greed"
 	desc = "A girl trapped in a magical crystal."
@@ -9,13 +9,16 @@
 	base_pixel_x = -16
 	maxHealth = 3200
 	health = 3200
+	ranged = TRUE
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomps"
 	faction = list("hostile")
 	damage_coeff = list(BRUTE = 1, RED_DAMAGE = 0, WHITE_DAMAGE = 0.5, BLACK_DAMAGE = 1.2, PALE_DAMAGE = 1.5)
 	speak_emote = list("states")
+	speed = 4
 	vision_range = 14
 	aggro_vision_range = 20
+	attack_action_types = list(/datum/action/innate/abnormality_attack/kog_dash, /datum/action/innate/abnormality_attack/kog_teleport)
 	stat_attack = HARD_CRIT
 	melee_damage_lower = 60	//Shouldn't really attack unless a player in controlling it, I guess.
 	melee_damage_upper = 80
@@ -32,8 +35,8 @@
 	work_damage_type = RED_DAMAGE
 	//Some Variables cannibalized from helper
 	var/charge_check_time = 1 SECONDS
-	var/charge_check_cooldown
 	var/charging = FALSE
+	var/teleport_cooldown
 	var/dash_num = 50	//Mostly a safeguard
 	var/list/been_hit = list()
 	var/busy = FALSE
@@ -44,14 +47,41 @@
 		)
 	gift_type =  /datum/ego_gifts/goldrush
 
+/datum/action/innate/abnormality_attack/kog_dash
+	name = "Ravenous Charge"
+	icon_icon = 'ModularTegustation/Teguicons/64x48.dmi'
+	button_icon_state = "kog"
+	chosen_message = "<span class='colossus'>You will now dash in that direction.</span>"
+	chosen_attack_num = 1
 
+/datum/action/innate/abnormality_attack/kog_teleport
+	name = "Teleport"
+	icon_icon = 'icons/effects/effects.dmi'
+	button_icon_state = "sparks"
+	chosen_message = "<span class='warning'>You will now teleport to a random area in the facility's halls.</span>"
+	chosen_attack_num = 2
+
+/datum/action/innate/abnormality_attack/kog_teleport/Activate()
+	addtimer(CALLBACK(A, .mob/living/simple_animal/hostile/abnormality/greed_king/proc/startTeleport), 1)
+	to_chat(A, chosen_message)
+
+/mob/living/simple_animal/hostile/abnormality/greed_king/Life()
+	. = ..()
+	if(!.) // Dead
+		return FALSE
+	if(!(status_flags & GODMODE))
+		if(!(busy || charging || client))
+			charge_check()
 
 /mob/living/simple_animal/hostile/abnormality/greed_king/AttackingTarget()
-	if(charging)
+	if(charging || busy)
 		return
+	return ..()
 
 /mob/living/simple_animal/hostile/abnormality/greed_king/Move()
-	return FALSE
+	if(charging || busy || !client)
+		return FALSE
+	return ..()
 
 /mob/living/simple_animal/hostile/abnormality/greed_king/breach_effect(mob/living/carbon/human/user)
 	..()
@@ -60,48 +90,52 @@
 	pixel_y = -8
 	base_pixel_y = -8
 
-	teleport()	//Let's Spaghettioodle out of here
+	startTeleport()	//Let's Spaghettioodle out of here
 
-/mob/living/simple_animal/hostile/abnormality/greed_king/proc/teleport()
-	if(charging || busy)
+/mob/living/simple_animal/hostile/abnormality/greed_king/proc/startTeleport()
+	if(charging || busy || teleport_cooldown > world.time)
 		return
-
-	//set busy, animate and teleport
+	teleport_cooldown = world.time + 4.9 SECONDS
+	//set busy, animate and call the proc that actually teleports.
 	busy = TRUE
-	var/turf/T = pick(GLOB.xeno_spawn)
 	animate(src, alpha = 0, time = 5)
-	SLEEP_CHECK_DEATH(5)
+	addtimer(CALLBACK(src, .proc/endTeleport), 5)
+
+/mob/living/simple_animal/hostile/abnormality/greed_king/proc/endTeleport()
+	var/turf/T = pick(GLOB.xeno_spawn)
 	animate(src, alpha = 255, time = 5)
 	forceMove(T)
-
-	//Clear lists
-	been_hit = list()
-	charge_check()
-	if(!charging)
-		SLEEP_CHECK_DEATH(5 SECONDS)
-		busy = FALSE
-		teleport()
+	busy = FALSE
+	if(!client)
+		addtimer(CALLBACK(src, .proc/startTeleport), 5 SECONDS)
 
 /mob/living/simple_animal/hostile/abnormality/greed_king/proc/charge_check()
 	//targeting
 	var/mob/living/carbon/human/target
-	if(charging && !busy)
+	if(charging || busy)
 		return
-	busy = TRUE
 	var/list/possible_targets = list()
 	for(var/mob/living/carbon/human/H in view(20, src))
 		possible_targets += H
-	if(!LAZYLEN(possible_targets))
-		return
-	if(!charging && !target)
+	if(LAZYLEN(possible_targets))
 		target = pick(possible_targets)
-	//Start charge
-	SLEEP_CHECK_DEATH(2 SECONDS)
-	if(ishuman(target)&& !charging)
-		var/dir_to_target = get_cardinal_dir(get_turf(src), get_turf(target))
+		//Start charge
+		var/dir_to_target = get_dir(get_turf(src), get_turf(target))
 		if(dir_to_target in list(NORTH, SOUTH, WEST, EAST))
-			charge(dir_to_target, 0, target)
+			busy = TRUE
+			addtimer(CALLBACK(src, .proc/charge, dir_to_target, 0, target), 2 SECONDS)
 			return
+	return
+
+
+/mob/living/simple_animal/hostile/abnormality/greed_king/OpenFire() // This exists so players can manually charge during playable abnormalities.
+	if(busy || charging || !client)
+		return
+	switch(chosen_attack)
+		if(1)
+			var/dir_to_target = get_cardinal_dir(get_turf(src), get_turf(target))
+			charge(dir_to_target, 0, target)
+	return
 
 /mob/living/simple_animal/hostile/abnormality/greed_king/proc/charge(move_dir, times_ran, target)
 	setDir(move_dir)
@@ -111,6 +145,7 @@
 	var/turf/T = get_step(get_turf(src), move_dir)
 	if(!T)
 		charging = FALSE
+		been_hit = list()
 		return
 	if(T.density)
 		stop_charge = TRUE
@@ -125,10 +160,9 @@
 
 	//Stop charging
 	if(stop_charge)
-		SLEEP_CHECK_DEATH(7 SECONDS)
+		busy = TRUE
 		charging = FALSE
-		busy = FALSE
-		teleport()
+		addtimer(CALLBACK(src, .proc/endCharge), 7 SECONDS)
 		return
 	forceMove(T)
 	charging = TRUE
@@ -159,6 +193,10 @@
 		new /obj/effect/temp_visual/small_smoke/halfsecond(R)
 	addtimer(CALLBACK(src, .proc/charge, move_dir, (times_ran + 1)), 2)
 
+/mob/living/simple_animal/hostile/abnormality/greed_king/proc/endCharge()
+	busy = FALSE
+	if(!client)
+		startTeleport()
 
 /* Work effects */
 /mob/living/simple_animal/hostile/abnormality/greed_king/neutral_effect(mob/living/carbon/human/user, work_type, pe)
