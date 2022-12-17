@@ -64,6 +64,13 @@
 	var/patrol_cooldown_time = 30 SECONDS
 	var/list/patrol_path = list()
 	var/patrol_tries = 0 //max of 5
+	/// Abnormality Chemistry System
+	var/hasChem = FALSE
+	var/chemType = null
+	var/chemYield = 5
+	var/chemCooldown = 15 SECONDS
+	var/harvestVerb = "harvest"
+	var/harvestVerbContinuous = "harvests"
 
 /mob/living/simple_animal/hostile/abnormality/Initialize(mapload)
 	. = ..()
@@ -126,6 +133,14 @@
 				patrol_select()
 				if(patrol_path.len)
 					patrol_move(patrol_path[patrol_path.len])
+
+/mob/living/simple_animal/hostile/abnormality/attackby(obj/O, mob/user, params)
+	if(istype(O, var/obj/item/reagent_containers/container))
+	if(status_flags & GODMODE)
+		if(hasChemical)
+			to_chat(user, "<span class='notice'>You [harvestVerb] </span>")
+		else
+			to_chat(user, "<span class='notice'>You don't think there's anything to be gained here...</span>")
 
 /mob/living/simple_animal/hostile/abnormality/proc/CanStartPatrol()
 	return AIStatus == AI_IDLE //if AI is idle, begin checking for patrol
