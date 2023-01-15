@@ -29,6 +29,10 @@
 							"Bald"
 							)
 	var/bald_users = list()
+	hasChem = TRUE
+	chemType = /datum/reagent/abnormality/bald
+	harvestPhrase = "You squeeze You are Bald. Some juice drips into"
+	harvestPhraseThirdPerson = "squeezes You are Bald. Some juice drips into"
 
 /mob/living/simple_animal/hostile/abnormality/bald/WorkChance(mob/living/carbon/human/user, chance)
 	if(user.hairstyle in balding_list)
@@ -72,3 +76,17 @@
 		else
 			icon_state = "bald1"
 
+/datum/reagent/abnormality/bald
+	name = "Essence of Baldness"
+	description = "Some weird-looking juice..."
+	color = "#ffffff"
+	specialProperties = list("substance may alter subject physiology")
+	sanityRestore = 1
+
+/datum/reagent/abnormality/bald/on_mob_metabolize(mob/living/L)
+	if(ishuman(L))
+		var/mob/living/carbon/human/balder = L
+		if(balder.hairstyle != "Bald")
+			balder.hairstyle = "Bald"
+			balder.update_hair()
+	return ..()

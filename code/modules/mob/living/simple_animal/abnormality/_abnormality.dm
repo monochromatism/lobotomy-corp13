@@ -66,11 +66,12 @@
 	var/patrol_tries = 0 //max of 5
 	/// Abnormality Chemistry System
 	var/hasChem = FALSE
-	var/chemType = null
+	var/chemType = /datum/reagent/abnormality
 	var/chemYield = 5
 	var/chemCooldown = 15 SECONDS
-	var/harvestVerb = "harvest"
-	var/harvestVerbContinuous = "harvests"
+	var/chemCooldownTimer = 0
+	var/harvestPhrase = "You harvest... something... into"
+	var/harvestPhraseThirdPerson = "harvests... something... into"
 
 /mob/living/simple_animal/hostile/abnormality/Initialize(mapload)
 	. = ..()
@@ -135,12 +136,22 @@
 					patrol_move(patrol_path[patrol_path.len])
 
 /mob/living/simple_animal/hostile/abnormality/attackby(obj/O, mob/user, params)
-	if(istype(O, var/obj/item/reagent_containers/container))
-	if(status_flags & GODMODE)
-		if(hasChemical)
-			to_chat(user, "<span class='notice'>You [harvestVerb] </span>")
+	if(istype(O, /obj/item/reagent_containers))
+		if(status_flags & GODMODE)
+			if(hasChem)
+				if(world.time > chemCooldownTimer)
+					var/obj/item/reagent_containers/myContainer = O
+					to_chat(user, "[harvestPhrase] [O]")
+					user.visible_message("[user] [harvestPhraseThirdPerson] [O]")
+					myContainer.reagents.add_reagent(chemType, chemYield)
+					chemCooldownTimer = world.time + chemCooldown
+				else
+					to_chat(user, "<span class='notice'>You may need to wait a bit longer.</span>")
+			else
+				to_chat(user, "<span class='notice'>You don't think there's anything to be gained here.</span>")
 		else
-			to_chat(user, "<span class='notice'>You don't think there's anything to be gained here...</span>")
+			to_chat(user, "<span class='notice'>This doesn't seem like the right time.</span>")
+	return ..()
 
 /mob/living/simple_animal/hostile/abnormality/proc/CanStartPatrol()
 	return AIStatus == AI_IDLE //if AI is idle, begin checking for patrol

@@ -30,6 +30,10 @@
 	var/heal_cooldown = 2 SECONDS
 	var/heal_cooldown_base = 2 SECONDS
 	var/list/mob/living/carbon/human/protected_people = list()
+	hasChem = TRUE
+	chemType = /datum/reagent/abnormality/fairy_festival
+	harvestPhrase = "A fairy presents you a small flower, then pours its contents into"
+	harvestPhraseThirdPerson = "is presented a small flower by a fairy, which it then pours into"
 
 /mob/living/simple_animal/hostile/abnormality/fairy_festival/proc/FairyHeal()
 	for(var/mob/living/carbon/human/P in protected_people)
@@ -78,4 +82,9 @@
 		user.gib()
 	return
 
-
+/datum/reagent/abnormality/fairy_festival
+	name = "Nectar of an Unknown Flower"
+	description = "The fairies got this for you..."
+	color = "#e4d0b2"
+	healthRestore = 2
+	armorMods = list(-2, 0, 0, 0)
