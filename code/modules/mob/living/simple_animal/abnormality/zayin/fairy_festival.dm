@@ -32,8 +32,6 @@
 	var/list/mob/living/carbon/human/protected_people = list()
 	hasChem = TRUE
 	chemType = /datum/reagent/abnormality/fairy_festival
-	harvestPhrase = "A fairy presents you a small flower, then pours its contents into"
-	harvestPhraseThirdPerson = "is presented a small flower by a fairy, which it then pours into"
 
 /mob/living/simple_animal/hostile/abnormality/fairy_festival/proc/FairyHeal()
 	for(var/mob/living/carbon/human/P in protected_people)
@@ -81,6 +79,11 @@
 		protected_people.Remove(user)
 		user.gib()
 	return
+
+/mob/living/simple_animal/hostile/abnormality/fairy_festival/harvestChem(obj/item/reagent_containers/C, mob/user)
+	harvestPhrase = "A fairy presents you a small flower, then pours its contents into [C]."
+	harvestPhraseThirdPerson = "A fairy presents [user] with a small flower, then pours it into [C]."
+	return ..()
 
 /datum/reagent/abnormality/fairy_festival
 	name = "Nectar of an Unknown Flower"

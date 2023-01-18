@@ -30,8 +30,6 @@
 	var/cake = 5	//How many cake charges are there (4)
 	hasChem = TRUE
 	chemType = /datum/reagent/abnormality/bottle
-	harvestPhrase = "You sweep up some crumbs from around Bottle of Tears into"
-	harvestPhraseThirdPerson = "sweeps up some crumbs from around Bottle of Tears into"
 
 /mob/living/simple_animal/hostile/abnormality/bottle/AttemptWork(mob/living/carbon/human/user, work_type)
 	if(cake)
@@ -111,6 +109,11 @@
 		L.adjust_attribute_buff(JUSTICE_ATTRIBUTE, 20)
 
 #undef STATUS_EFFECT_TEARS
+
+/mob/living/simple_animal/hostile/abnormality/bottle/harvestChem(obj/item/reagent_containers/C, mob/user)
+	harvestPhrase = "You sweep up some crumbs from around [src] into [C]."
+	harvestPhraseThirdPerson = "[user] sweeps up crumbs from around [src] into [C]."
+	return ..()
 
 /datum/reagent/abnormality/bottle
 	name = "Crumbs"

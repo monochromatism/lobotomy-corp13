@@ -31,8 +31,6 @@
 	var/bald_users = list()
 	hasChem = TRUE
 	chemType = /datum/reagent/abnormality/bald
-	harvestPhrase = "You squeeze You are Bald. Some juice drips into"
-	harvestPhraseThirdPerson = "squeezes You are Bald. Some juice drips into"
 
 /mob/living/simple_animal/hostile/abnormality/bald/WorkChance(mob/living/carbon/human/user, chance)
 	if(user.hairstyle in balding_list)
@@ -75,6 +73,11 @@
 			icon_state = "bald3"
 		else
 			icon_state = "bald1"
+
+/mob/living/simple_animal/hostile/abnormality/bald/harvestChem(obj/item/reagent_containers/C, mob/user)
+	harvestPhrase = "You squeeze [src]. Some juice drips into [C]."
+	harvestPhraseThirdPerson = "[user] squeezes [src]. Some juice drips into [C]."
+	return ..()
 
 /datum/reagent/abnormality/bald
 	name = "Essence of Baldness"

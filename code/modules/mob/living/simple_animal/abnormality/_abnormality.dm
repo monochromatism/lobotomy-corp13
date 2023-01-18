@@ -70,8 +70,8 @@
 	var/chemYield = 5
 	var/chemCooldown = 15 SECONDS
 	var/chemCooldownTimer = 0
-	var/harvestPhrase = "You harvest... something... into"
-	var/harvestPhraseThirdPerson = "harvests... something... into"
+	var/harvestPhrase = "dummy"
+	var/harvestPhraseThirdPerson = "dummy"
 
 /mob/living/simple_animal/hostile/abnormality/Initialize(mapload)
 	. = ..()
@@ -141,10 +141,7 @@
 			if(hasChem)
 				if(world.time > chemCooldownTimer)
 					var/obj/item/reagent_containers/myContainer = O
-					to_chat(user, "[harvestPhrase] [O]")
-					user.visible_message("[user] [harvestPhraseThirdPerson] [O]")
-					myContainer.reagents.add_reagent(chemType, chemYield)
-					chemCooldownTimer = world.time + chemCooldown
+					harvestChem(myContainer, user)
 				else
 					to_chat(user, "<span class='notice'>You may need to wait a bit longer.</span>")
 			else
@@ -152,6 +149,16 @@
 		else
 			to_chat(user, "<span class='notice'>This doesn't seem like the right time.</span>")
 	return ..()
+
+/mob/living/simple_animal/hostile/abnormality/proc/harvestChem(obj/item/reagent_containers/C, mob/user)
+	if(harvestPhrase == "dummy")
+		harvestPhrase = "You harvest... something... into [C]."
+	if(harvestPhraseThirdPerson == "dummy")
+		harvestPhraseThirdPerson = "[user] harvests... something... into [C]."
+	to_chat(user, "[harvestPhrase]")
+	user.visible_message("[harvestPhraseThirdPerson]")
+	C.reagents.add_reagent(chemType, chemYield)
+	chemCooldownTimer = world.time + chemCooldown
 
 /mob/living/simple_animal/hostile/abnormality/proc/CanStartPatrol()
 	return AIStatus == AI_IDLE //if AI is idle, begin checking for patrol

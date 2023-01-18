@@ -27,8 +27,6 @@
 	gift_message = "From this day forth, you shall never forget his words."
 	hasChem = TRUE
 	chemType = /datum/reagent/abnormality/onesin
-	harvestPhrase = "As you hold it up before One Sin, holy light fills"
-	harvestPhraseThirdPerson = "lets holy light fill"
 
 /mob/living/simple_animal/hostile/abnormality/onesin/WorkChance(mob/living/carbon/human/user, chance)
 	. = ..()
@@ -80,6 +78,11 @@
 		for(var/mob/living/carbon/human/H in GLOB.player_list)
 			H.adjustSanityLoss(30)
 	..()
+
+/mob/living/simple_animal/hostile/abnormality/onesin/harvestChem(obj/item/reagent_containers/C, mob/user)
+	harvestPhrase = "As you hold it up before One Sin, holy light fills [C]."
+	harvestPhraseThirdPerson = "[user] holds up [C], letting it be filled with holy light."
+	return ..()
 
 /datum/reagent/abnormality/onesin
 	name = "Holy Light"

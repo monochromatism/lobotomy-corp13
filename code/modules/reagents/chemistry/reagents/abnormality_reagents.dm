@@ -13,7 +13,6 @@
 	var/list/statChanges = list(0, 0, 0, 0) // Fortitude, Justice, Prudence, Temperance, in order. Positive and negative both work.
 	var/list/armorMods = list(0, 0, 0, 0) // Red, white, black, pale, in order. 10 = I, 50 = V, 100 = X. Applies additively. (Or subtractively, if negative.) USE SPARINGLY!
 	var/list/damageMods = list(1, 1, 1, 1) // Same order as armorMods, but multiplicative. Applied after armor. Knight of Despair's blessed has 0.5, 0.5, 0.5, 2.0, for reference.
-	var/list/damageDealt = list() // A 2D list. Elements should be damage type, damage amount, damage occurrence (1 for every lifetick, 2 for on metabolize, 3 for on deplete)
 
 /datum/reagent/abnormality/on_mob_life(mob/living/L)
 	if(!ishuman(L))
@@ -23,9 +22,6 @@
 		H.adjustBruteLoss(-healthRestore*REM)
 	if(sanityRestore != 0)
 		H.adjustSanityLoss(sanityRestore*REM)
-	for(var/list/damageProc in damageDealt[1])
-		if(damageProc[3] == 1)
-			H.apply_damage(damageProc[2], damageProc[1], null, H.run_armor_check(null, damageProc[1]))
 	return ..()
 
 /datum/reagent/abnormality/on_mob_metabolize(mob/living/L)
@@ -112,10 +108,8 @@
 				readout2 |= "- substance may reduce subject mental stability"
 			if((abnoChem.statChanges[1] || abnoChem.statChanges[2] || abnoChem.statChanges[3] || abnoChem.statChanges[4]) != 0)
 				readout2 |= "- substance may alter subject's abilities"
-			if((abnoChem.armorMods[1] || abnoChem.armorMods[2] || abnoChem.armorMods[3] || abnoChem.armorMods[4]) != 0)
+			if((abnoChem.armorMods[1] || abnoChem.armorMods[2] || abnoChem.armorMods[3] || abnoChem.armorMods[4] || abnoChem.damageMods[1] || abnoChem.damageMods[2] || abnoChem.damageMods[3] || abnoChem.damageMods[4]) != 0)
 				readout2 |= "- substance may alter subject's durability"
-			if((abnoChem.damageMods[1] || abnoChem.damageMods[2] || abnoChem.damageMods[3] || abnoChem.damageMods[4]) != 0)
-				readout2 |= "- substance may alter subject's frailty"
 		for(var/reportLine in readout1)
 			to_chat(usr, reportLine)
 		for(var/reportLine in readout2)

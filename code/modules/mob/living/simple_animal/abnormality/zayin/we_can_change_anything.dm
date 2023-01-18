@@ -26,8 +26,6 @@
 	gift_message = "Your heart beats with new vigor."
 	hasChem = TRUE
 	chemType = /datum/reagent/abnormality/we_can_change_anything
-	harvestPhrase = "You scoop up some goo from the inner lip of We Can Change Anything using"
-	harvestPhraseThirdPerson = "scoops up some goo from inside We Can Change Anything with"
 
 /mob/living/simple_animal/hostile/abnormality/we_can_change_anything/Worktick(mob/living/carbon/human/user)
 	user.apply_damage(4, RED_DAMAGE, null, user.run_armor_check(null, RED_DAMAGE)) // say goodbye to your kneecaps chucklenuts!
@@ -61,6 +59,11 @@
 		L.physiology.red_mod /= 0.9
 
 #undef STATUS_EFFECT_CHANGE
+
+/mob/living/simple_animal/hostile/abnormality/we_can_change_anything/harvestChem(obj/item/reagent_containers/C, mob/user)
+	harvestPhrase = "You scoop up some goo from the inner lip of [src] using [C]."
+	harvestPhraseThirdPerson = "[user] scoops up some goo from the inner lip of [src] with [C]."
+	return ..()
 
 /datum/reagent/abnormality/we_can_change_anything
 	name = "Dubious Red Goo"

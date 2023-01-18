@@ -25,8 +25,6 @@
 	gift_message = "You feel like you've been doing this your whole life."
 	hasChem = TRUE
 	chemType = /datum/reagent/abnormality/wellcheersZero
-	harvestPhrase = "The machine dispenses some clear-ish soda into"
-	harvestPhraseThirdPerson = "prods the machine, and it dispenses some clear-ish soda into"
 
 /mob/living/simple_animal/hostile/abnormality/wellcheers/SuccessEffect(mob/living/carbon/human/user, work_type, pe)
 	var/obj/item/dropped_can
@@ -79,11 +77,15 @@
 	inhand_icon_state = "purple_can"
 	list_reagents = list(/datum/reagent/consumable/wellcheers_purple = 10)
 
+/mob/living/simple_animal/hostile/abnormality/wellcheers/harvestChem(obj/item/reagent_containers/C, mob/user)
+	harvestPhrase = "The machine dispenses some clear-ish soda into [C]."
+	harvestPhraseThirdPerson = "[user] holds up [C] and lets [src] dispense some clear-ish soda into it."
+	return ..()
+
 /datum/reagent/abnormality/wellcheersZero
 	name = "Wellcheers Zero"
 	description = "Low-impact soda for the high-energy lifestyle."
 	specialProperties = list("substance may have erratic effects on subject's physical and mental state")
-	reagent_state = LIQUID
 	color = "#b2e0c0"
 
 /datum/reagent/abnormality/wellcheersZero/on_mob_life(mob/living/L)
