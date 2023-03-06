@@ -49,6 +49,7 @@ GLOBAL_LIST_EMPTY(vine_list)
 	/datum/ego_datum/armor/stem
 	)
 	gift_type =  /datum/ego_gifts/stem
+	abnormality_origin = "Lobotomy Corporation"
 
 /mob/living/simple_animal/hostile/abnormality/snow_whites_apple/NeutralEffect(mob/living/carbon/human/user, work_type, pe)
 	datum_reference.qliphoth_change(-1)

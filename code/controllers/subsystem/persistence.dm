@@ -132,8 +132,10 @@ SUBSYSTEM_DEF(persistence)
 		for(var/name in SSpersistence.saved_maps)
 			if(VM.map_name == name)
 				run++
-		if(run >= 2) //If run twice in the last KEEP_ROUNDS_MAP + 1 (including current) rounds, disable map for voting and rotation.
-			blocked_maps += VM.map_name
+		// if(run >= 2) //If run twice in the last KEEP_ROUNDS_MAP + 1 (including current) rounds, disable map for voting and rotation.
+			// blocked_maps += VM.map_name
+			// Actually, scratch that. Our players know when to pick what map. We trust them.
+			// I'm leaving the code here commented though, because persistence is too dangerous to touch willy-nilly like that.
 
 /datum/controller/subsystem/persistence/proc/LoadAntagReputation()
 	var/json = file2text(FILE_ANTAG_REP)

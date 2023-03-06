@@ -23,6 +23,7 @@
 	del_on_death = FALSE
 	projectilesound = 'sound/abnormalities/hatredqueen/attack.ogg'
 	deathsound = 'sound/abnormalities/hatredqueen/dead.ogg'
+	abnormality_origin = "Lobotomy Corporation"
 
 	speed = 2
 	move_to_delay = 4
