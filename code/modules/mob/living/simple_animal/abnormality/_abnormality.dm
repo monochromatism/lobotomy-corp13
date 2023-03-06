@@ -53,6 +53,10 @@
 	var/work_damage_type = RED_DAMAGE
 	/// Maximum amount of PE someone can obtain per work procedure, if not null or 0.
 	var/max_boxes = null
+	// Work speed override. When true, SpeedOverride is called at the start of each work tick; when false, it's never called. Can be changed midwork.
+	var/speed_override = FALSE
+	// Work success chance override. When true, RateOverride is called at the start of each work tick; when false, it's never called. Can be changed midwork.
+	var/chance_override = FALSE
 	/// List of ego equipment datums
 	var/list/ego_list = list()
 	/// EGO Gifts
@@ -256,6 +260,17 @@
 // Dictates whereas this type of work can be performed at the moment or not
 /mob/living/simple_animal/hostile/abnormality/proc/AttemptWork(mob/living/carbon/human/user, work_type)
 	return TRUE
+
+// Overrides the normal work delay. Called in abnormality_work.dm each worktick while speed_override is TRUE.
+// work_speed is the vanilla value, temp_work_speed is the value as modified by any previous use of SpeedOverride.
+// If speed_override is TRUE and then set FALSE mid-work, the last value this returned will continue being used until the work ends. Useful for "flat" changes.
+// Remember, this is altering the FINAL value. Returning 0 makes an instant worktick, returning 20 makes a 2 second worktick.
+/mob/living/simple_animal/hostile/abnormality/proc/SpeedOverride(mob/living/carbon/human/user, work_speed, temp_work_speed, work_type)
+	return work_speed
+
+// Overrides the normal work chance. See SpeedOverride's comments; this behaves identically, but for work chance.
+/mob/living/simple_animal/hostile/abnormality/proc/ChanceOverride(mob/living/carbon/human/user, work_chance, temp_work_chance, work_type)
+	return work_chance
 
 // Effects when qliphoth reaches 0
 /mob/living/simple_animal/hostile/abnormality/proc/ZeroQliphoth(mob/living/carbon/human/user)

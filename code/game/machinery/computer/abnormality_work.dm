@@ -157,7 +157,9 @@
 		work_chance -= 10
 	if(meltdown == MELTDOWN_CYAN)
 		work_chance -= 20
+	var/temp_work_chance = work_chance
 	var/work_speed = 2 SECONDS / (1 + ((get_attribute_level(user, TEMPERANCE_ATTRIBUTE) + datum_reference.understanding) / 100))
+	var/temp_work_speed = work_speed
 	var/success_boxes = 0
 	var/total_boxes = 0
 	var/canceled = FALSE
@@ -169,14 +171,18 @@
 	while(total_boxes < work_time)
 		if(!CheckStatus(user))
 			break
-		if(do_after(user, work_speed, src, IGNORE_HELD_ITEM))
+		if(datum_reference.current.speed_override)
+			temp_work_speed = datum_reference.current.SpeedOverride(user, work_speed, temp_work_speed, work_type)
+		if(do_after(user, temp_work_speed, src, IGNORE_HELD_ITEM))
 			if(!CheckStatus(user))
 				break
 			user.remove_status_effect(/datum/status_effect/interventionshield) //removing status effect doesnt seem to effect all of parent. -IP
 			user.remove_status_effect(/datum/status_effect/interventionshield/white)
 			user.remove_status_effect(/datum/status_effect/interventionshield/black)
 			user.remove_status_effect(/datum/status_effect/interventionshield/pale)
-			if(do_work(work_chance))
+			if(datum_reference.current.chance_override)
+				temp_work_chance = datum_reference.current.ChanceOverride(user, work_chance, temp_work_chance, work_type)
+			if(do_work(temp_work_chance))
 				success_boxes++
 				datum_reference.current.WorktickSuccess(user)
 			else
