@@ -99,7 +99,7 @@
 	GiveTarget(user)
 
 //Too many people looking? Reduce final work success rate to 0.
-/mob/living/simple_animal/hostile/abnormality/schadenfreude/ChanceOverride(mob/living/carbon/human/user, work_chance, temp_work_chance, work_type)
+/mob/living/simple_animal/hostile/abnormality/schadenfreude/ChanceOverride(mob/living/carbon/human/user, work_chance, mod_work_chance, work_type)
 	if(seen && !solo_punish) //If you're only considered "seen" because the other living player(s) are all on another Z level, disregard it during work specifically.
 		to_chat(user, "<span class='warning'>You are injured by [src]!</span>") // Keeping it clear that the bad work is from being seen and not just luck.
 		new /obj/effect/temp_visual/dir_setting/bloodsplatter(get_turf(user), pick(GLOB.alldirs))
