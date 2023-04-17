@@ -95,9 +95,8 @@
 		gift_message += "\nYou are granted a gift by [src]!"
 
 /mob/living/simple_animal/hostile/abnormality/Destroy()
-	if(istype(datum_reference)) // Respawn the mob on death
-		datum_reference.current = null
-		addtimer(CALLBACK (datum_reference, .datum/abnormality/proc/RespawnAbno), 30 SECONDS)
+	datum_reference.current = null
+	addtimer(CALLBACK (datum_reference, .datum/abnormality/proc/RespawnAbno), 30 SECONDS)
 	..()
 
 /mob/living/simple_animal/hostile/abnormality/add_to_mob_list()
@@ -316,6 +315,11 @@
 	if((status_flags & GODMODE) && (!datum_reference.qliphoth_meter_max || datum_reference.qliphoth_meter))
 		return TRUE
 	return FALSE
+
+///Returns the abnormality to its initial containment state. This does destroy the abnormality, so use transfer and remember var if you want something to carry over.
+/mob/living/simple_animal/hostile/abnormality/proc/ForceReset()
+	addtimer(CALLBACK (datum_reference, .datum/abnormality/proc/RespawnAbno), 0.1)
+	QDEL_NULL(src)
 
 // Actions
 /datum/action/innate/abnormality_attack
