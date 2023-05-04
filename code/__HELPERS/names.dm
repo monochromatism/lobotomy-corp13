@@ -39,7 +39,7 @@ GLOBAL_VAR(command_name)
 		if(config_station_name)
 			newname = config_station_name
 		else
-			newname = new_station_name()
+			newname = new_facility_name()
 
 		set_station_name(newname)
 
@@ -54,6 +54,37 @@ GLOBAL_VAR(command_name)
 	else
 		world.name = GLOB.station_name
 
+
+/proc/new_facility_name()
+	var/list/full_title = list("Branch ", "Branch Facility ", "Major Facility ", "Main Facility ")
+	var/list/facility_alphabet
+	var/random_3digit = rand(0,999)
+	var/threedigit = ""
+	if(random_3digit < 10)
+		threedigit = "00[random_3digit]"
+	else if(random_3digit < 100)
+		threedigit = "0[random_3digit]"
+	else
+		threedigit = random_3digit
+	facility_alphabet = pick(GLOB.greek_letters) // Picks at random first so it has something to work with in the event of a failure
+	switch(SSmapping.config.map_name[10]) // If there's a better way to do this, I don't know it.
+		if("A")
+			facility_alphabet = GLOB.greek_letters[1]
+		if("B")
+			facility_alphabet = GLOB.greek_letters[2]
+		if("C")
+			facility_alphabet = GLOB.greek_letters[3]
+		if("D")
+			facility_alphabet = GLOB.greek_letters[4]
+		if("E")
+			facility_alphabet = GLOB.greek_letters[5]
+		if("F")
+			facility_alphabet = GLOB.greek_letters[6]
+		if("G")
+			facility_alphabet = GLOB.greek_letters[7]
+	var/final_facility_name = pick(full_title)
+	final_facility_name = final_facility_name + facility_alphabet + "-[threedigit]"
+	return final_facility_name
 
 /proc/new_station_name()
 	var/random = rand(1,5)
